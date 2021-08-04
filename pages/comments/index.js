@@ -29,7 +29,7 @@ export default function CommentsPage() {
       <button onClick={fetchComments}>Fetch Comments</button>
       {comments.map((comment) => {
         return (
-          <div>
+          <div key={comment.id}>
             <p>{comment.text}</p>
           </div>
         );
