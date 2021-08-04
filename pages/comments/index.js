@@ -3,6 +3,7 @@ import { useState } from "react";
 export default function CommentsPage() {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
+
   const fetchComments = async () => {
     const response = await fetch("/api/comments");
     const data = await response.json();
@@ -18,6 +19,15 @@ export default function CommentsPage() {
     });
     const data = await response.json();
   };
+
+  const deleteComment = async (commentId) => {
+    const response = await fetch(`/api/comments/${commentId}`, {
+      method: "DELETE",
+    });
+
+    const data = await response.json();
+    fetchComments();
+  };
   return (
     <div>
       <input
@@ -31,6 +41,7 @@ export default function CommentsPage() {
         return (
           <div key={comment.id}>
             <p>{comment.text}</p>
+            <button onClick={() => deleteComment(comment.id)}>Delete</button>
           </div>
         );
       })}
